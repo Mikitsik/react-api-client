@@ -1,18 +1,15 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 
-import LinearHeader from './components/linear-header';
-import LinearInput from './components/linear-input';
-import QuadraticHeader from './components/quadratic-header';
-import QuadraticInput from './components/quadratic-input';
+import Equation from './components/equation';
 
 const App = () => {
   return (
-    <div>
-      <LinearHeader />
-      <LinearInput />
-      <QuadraticHeader />
-      <QuadraticInput />
+    <div className="container text-center p-5">
+      <Equation title="Linear equation" subtitle="Please, type ax + b = 0 equation form"
+                placeholder="linear equation" />
+      <Equation title="Quadratic equation" subtitle="Please, type ax2 + bx + c = 0 equation form"
+                placeholder="quadratic equation" />
     </div>
   );
 };
