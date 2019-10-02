@@ -6,9 +6,9 @@ import Input from '../input';
 
 import './equation.css'
 
-const Equation = ( { title, form, placeholder } ) => {
+const Equation = ( { title, form, type } ) => {
   return (
-    <div className="card text-center border-success mb-3 equation">
+    <div className="card text-center border-info mb-3 equation">
       <div className="card-header">
         <Title title={ title } />
       </div>
@@ -16,9 +16,9 @@ const Equation = ( { title, form, placeholder } ) => {
         <h4 className="card-title">
           <Subtitle form={ form } />
         </h4>
-        <p className="card-text">
-          <Input placeholder={ placeholder } />
-        </p>
+        <div className="card-text">
+          <Input form={ form } type={ type }/>
+        </div>
       </div>
     </div>
   );
