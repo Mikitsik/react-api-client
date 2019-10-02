@@ -5,19 +5,36 @@ export default class Input extends Component {
   render() {
     const { form, type } = this.props;
 
-    const eqSigns = form.match(/[^\^\w]+/g);
-    const eqMems = form.match(/[\^\w]+/g).map((item) => {
-      return item.replace(/[^\^x\d]+/, " " )
+    const signs = form.match(/[-+/*=]+/g);
+    const members = form.match(/[\^\w]+/g);
+    const variables = members.map((item) => {
+      return item.replace(/[^\^xy\d]+/, " " )
+    });
+    const values = members.map((item) => {
+      return item.replace(/[\^xy\d]+/, "" )
     });
 
-    const inputs = eqMems.map((input, index) => {
-      if (/\D/.test(input)) {
+    const inputs = variables.map((input, index) => {
+      if (/[=]/.test(signs[index])) {
         return (
           <div key={ index + type } className="d-flex align-items-center">
             <input type="text" className="form-control mx-1"
-                   id={ index + type} size="2" />
+                   id={ index + type} size="2"
+                   placeholder={ values[index] } />
             <label htmlFor={ index + type} className="members">{ input }</label>
-            <span className="members">{ eqSigns[index] }</span>
+            <span className="members">{ signs[index] }</span>
+          </div>
+        );
+      } else if (/\D/.test(input)) {
+        return (
+          <div key={ index + type } className="d-flex align-items-center">
+            <input type="text" className="form-control mx-1"
+                   id={ index + type} size="2"
+                   placeholder={ values[index] } />
+            <label htmlFor={ index + type} className="members">{ input }</label>
+            <input type="text" className="form-control mx-1"
+                   id={ index + signs[index] + type} size="2"
+                   placeholder={ signs[index] }/>
           </div>
         );
       } else {
