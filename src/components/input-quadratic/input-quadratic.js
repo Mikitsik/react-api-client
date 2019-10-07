@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import EquationService from '../../services/equation-service';
 import './input-quadratic.css'
 
 export default class InputQuadratic extends Component {
@@ -6,11 +7,14 @@ export default class InputQuadratic extends Component {
   constructor () {
     super();
 
+    this.equationService = new EquationService();
+
     this.state = {
-      quadratic: {
+      data: {
         a: '0',
         b: '0',
-        c: '0'
+        c: '0',
+        permit_token: 'th1$iSa$upEr$equr3T0k3n'
       }
     }
 
@@ -19,8 +23,8 @@ export default class InputQuadratic extends Component {
       const value = event.target.value;
 
       this.setState({
-        quadratic: {
-            ...this.state.quadratic,
+        data: {
+            ...this.state.data,
             [name]: value
           }
       });
@@ -28,7 +32,10 @@ export default class InputQuadratic extends Component {
 
     this.onSubmit = (event) => {
       event.preventDefault();
-      console.log(this.state);
+
+      this.equationService.calculateQuadratic(this.state)
+        .then(data => console.log(JSON.stringify(data)))
+        .catch(error => console.error(error));
     }
   }
 
@@ -41,7 +48,7 @@ export default class InputQuadratic extends Component {
                    id="a"
                    name="a"
                    placeholder="a"
-                   value={ this.state.quadratic.a.value }
+                   value={ this.state.data.a.value }
                    onChange={ this.takeData } />
             <label htmlFor="a"><span className="quadratic">x<sup>2</sup> + </span></label>
             <input type="number"
@@ -49,7 +56,7 @@ export default class InputQuadratic extends Component {
                    id="b"
                    name="b"
                    placeholder="b"
-                   value={ this.state.quadratic.b.value }
+                   value={ this.state.data.b.value }
                    onChange={ this.takeData } />
             <label htmlFor="b"><span className="quadratic">x + </span></label>
             <input type="number"
@@ -57,7 +64,7 @@ export default class InputQuadratic extends Component {
                    id="c"
                    name="c"
                    placeholder="c"
-                   value={ this.state.quadratic.c.value }
+                   value={ this.state.data.c.value }
                    onChange={ this.takeData } />
             <label htmlFor="c"><span className="quadratic">= 0</span></label>
         <button className="btn btn-outline-info mx-1">
