@@ -19,10 +19,16 @@ export default class EqationService {
   }
 
   async calculateLinear(data) {
-    return await this.postData('/linear', data)
+    const resp = await this.postData('/linear', data);
+    return this._fetchedData(resp);
   }
 
   async calculateQuadratic(data) {
-    return await this.postData('/quadratic', data)
+    const resp = await this.postData('/quadratic', data);
+    return this._fetchedData(resp);
+  }
+
+  _fetchedData(data) {
+    return data
   }
 }

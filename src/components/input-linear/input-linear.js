@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import EquationService from '../../services/equation-service';
-import './input-linear.css'
+import Result from '../result';
+import './input-linear.css';
 
 export default class InputLinear extends Component {
 
@@ -16,9 +17,7 @@ export default class InputLinear extends Component {
         b: '0',
         permit_token: 'th1$iSa$upEr$equr3T0k3n'
       },
-      output: {
-
-      }
+      output: { }
     }
 
     this.takeData = (event) => {
@@ -39,38 +38,41 @@ export default class InputLinear extends Component {
       this.equationService.calculateLinear(this.state)
         .then((data) => {
             this.setState({
-              output: JSON.stringify(data)
+              output: data
             });
-        });
+          });
     }
   }
 
   render() {
     return (
-      <form className="d-flex justify-content-center"
-            onSubmit={ this.onSubmit } >
-            <input type="number"
-                   className="form-control"
-                   id="a"
-                   name="a"
-                   placeholder="a"
-                   value={ this.state.data.a.value }
-                   onChange={ this.takeData } />
-            <label htmlFor="a"><span className="linear">x + </span></label>
-            <input type="number"
-                   className="form-control"
-                   id="b"
-                   name="b"
-                   placeholder="b"
-                   value={ this.state.data.b.value }
-                   onChange={ this.takeData } />
-            <label htmlFor="b"><span className="linear">= 0</span></label>
-        <button className="btn btn-outline-info mx-1">
-          <span className="calculate">
-            Calculate
-          </span>
-        </button>
-      </form>
+      <React.Fragment>
+        <form className="d-flex justify-content-center"
+              onSubmit={ this.onSubmit } >
+              <input type="number"
+                     className="form-control"
+                     id="a"
+                     name="a"
+                     placeholder="a"
+                     value={ this.state.data.a.value }
+                     onChange={ this.takeData } />
+              <label htmlFor="a"><span className="linear">x + </span></label>
+              <input type="number"
+                     className="form-control"
+                     id="b"
+                     name="b"
+                     placeholder="b"
+                     value={ this.state.data.b.value }
+                     onChange={ this.takeData } />
+              <label htmlFor="b"><span className="linear">= 0</span></label>
+          <button className="btn btn-outline-info mx-1">
+            <span className="calculate">
+              Calculate
+            </span>
+          </button>
+        </form>
+        <Result data={ this.state.output.data } />
+      </React.Fragment>
     );
   };
 };
